@@ -1,10 +1,14 @@
+import streamlit as st
 import os
 from dotenv import load_dotenv
-load_dotenv()   # local .env file se read karega
+load_dotenv()
 
 # For deployment, Streamlit secrets will override
-api_key_1 = os.getenv("GEMINI_API_KEY", st.secrets.get("GEMINI_API_KEY"))
-import streamlit as st
+try:
+    api_key_1 = os.getenv("GEMINI_API_KEY") or st.secrets.get("GEMINI_API_KEY")
+except:
+    api_key_1 = os.getenv("GEMINI_API_KEY")
+
 import yfinance as yf
 import streamlit.components.v1 as components
 import google.generativeai as genai
@@ -13,6 +17,9 @@ import pandas as pd
 import numpy as np
 import requests
 import time
+import plotly.graph_objects as go
+import warnings
+warnings.filterwarnings('ignore')
 import plotly.graph_objects as go
 import warnings
 warnings.filterwarnings('ignore')
