@@ -1,3 +1,9 @@
+import os
+from dotenv import load_dotenv
+load_dotenv()   # local .env file se read karega
+
+# For deployment, Streamlit secrets will override
+api_key_1 = os.getenv("GEMINI_API_KEY", st.secrets.get("GEMINI_API_KEY"))
 import streamlit as st
 import yfinance as yf
 import streamlit.components.v1 as components
