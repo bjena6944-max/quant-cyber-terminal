@@ -20,9 +20,6 @@ import time
 import plotly.graph_objects as go
 import warnings
 warnings.filterwarnings('ignore')
-import plotly.graph_objects as go
-import warnings
-warnings.filterwarnings('ignore')
 
 # ===== REAL-TIME ML IMPORTS (with graceful fallback) =====
 try:
