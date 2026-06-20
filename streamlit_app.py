@@ -533,6 +533,21 @@ with col_text:
 st.markdown("---")
 
 # ==========================================
+# GOOGLE SEO - Organization Schema Markup
+# ==========================================
+st.markdown("""
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "NEONALPHA",
+        "url": "https://quant-cyber-terminal-jvos7vnhrnbfmkxfd5bdhm.streamlit.app",
+        "logo": "https://quant-cyber-terminal-jvos7vnhrnbfmkxfd5bdhm.streamlit.app/NEONALPHA.png"
+    }
+    </script>
+""", unsafe_allow_html=True)
+
+# ==========================================
 # SIDEBAR
 # ==========================================
 st.sidebar.markdown("<h2 style='color:#00ffcc; text-shadow: 0 0 5px #00ffcc;'>🎛️ CONTROL PANEL</h2>", unsafe_allow_html=True)
