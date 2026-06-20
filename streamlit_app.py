@@ -39,12 +39,17 @@ except ImportError:
     st.warning("⚠️ Real-time ML requires 'websocket-client'. Install with: pip install websocket-client")
 
 # ==========================================
-# PAGE CONFIG
+# PAGE CONFIG (with new title and favicon)
 # ==========================================
-st.set_page_config(page_title="QUANT X CYBER TERMINAL", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(
+    page_title="NEONALPHA — Institutional Quant Intelligence",
+    page_icon="⚡",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
 # ==========================================
-# CUSTOM CSS
+# CUSTOM CSS (same, but with NEONALPHA vibe)
 # ==========================================
 st.markdown("""
     <style>
@@ -95,11 +100,36 @@ st.markdown("""
             margin: 15px 0;
             box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
         }
+        /* NEW: Branding style for NEONALPHA */
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .brand-icon {
+            font-size: 48px;
+        }
+        .brand-name {
+            font-size: 32px;
+            color: #00ffcc;
+            text-shadow: 0 0 30px #00ffcc;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+        }
+        .brand-tagline {
+            font-size: 14px;
+            color: #ff007f;
+            text-shadow: 0 0 15px #ff007f;
+            letter-spacing: 4px;
+            font-weight: 300;
+        }
     </style>
 """, unsafe_allow_html=True)
 
 # ==========================================
-# FUNCTIONS
+# FUNCTIONS (unchanged)
 # ==========================================
 
 def get_live_price(symbol):
@@ -481,10 +511,17 @@ if ML_AVAILABLE:
             }
 
 # ==========================================
-# BRANDING
+# BRANDING - NEONALPHA HEADER
 # ==========================================
-st.title("⚡ QUANT X CYBER AI TERMINAL")
-st.markdown("<p style='color:#00ffcc; font-weight:bold; text-shadow:0 0 5px #00ffcc;'>[ALL-IN-ONE INSTITUTIONAL INTELLIGENCE PLATFORM]</p>", unsafe_allow_html=True)
+st.markdown("""
+    <div class="brand-container">
+        <span class="brand-icon">⚡</span>
+        <span class="brand-name">NEONALPHA</span>
+        <span style="flex:1;"></span>
+        <span class="brand-tagline">INSTITUTIONAL QUANT INTELLIGENCE</span>
+    </div>
+""", unsafe_allow_html=True)
+st.markdown("---")
 
 # ==========================================
 # SIDEBAR
@@ -588,7 +625,7 @@ with price_placeholder.container():
 st.markdown("---")
 
 # ==========================================
-# TABS (5 tabs)
+# TABS (5 tabs) - unchanged
 # ==========================================
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "📊 LIVE TRADING DESK", 
