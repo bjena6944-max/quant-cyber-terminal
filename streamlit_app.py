@@ -49,6 +49,13 @@ st.set_page_config(
 )
 
 # ==========================================
+# GOOGLE SEARCH CONSOLE VERIFICATION META TAG
+# ==========================================
+st.markdown("""
+    <meta name="google-site-verification" content="qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4" />
+""", unsafe_allow_html=True)
+
+# ==========================================
 # CUSTOM CSS (with NEONALPHA styling)
 # ==========================================
 st.markdown("""
