@@ -39,7 +39,7 @@ except ImportError:
     st.warning("⚠️ Real-time ML requires 'websocket-client'. Install with: pip install websocket-client")
 
 # ==========================================
-# PAGE CONFIG (with new title and favicon)
+# PAGE CONFIG
 # ==========================================
 st.set_page_config(
     page_title="NEONALPHA — Institutional Quant Intelligence",
@@ -49,27 +49,14 @@ st.set_page_config(
 )
 
 # ==========================================
-# GOOGLE SEARCH CONSOLE VERIFICATION
+# GOOGLE SEARCH CONSOLE VERIFICATION META TAG
 # ==========================================
-# PRIMARY: HTML Tag Method (Recommended for Streamlit)
 st.markdown("""
     <meta name="google-site-verification" content="qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4" />
 """, unsafe_allow_html=True)
 
-# SECONDARY: HTML File method fallback (Embed the content safely)
-try:
-    with open("googlea939c6e0ed88f9e2.html", "r", encoding="utf-8") as f:
-        file_content = f.read()
-    # Remove html, head, body tags to avoid breaking the layout
-    file_content = file_content.replace("<html>", "").replace("</html>", "")
-    file_content = file_content.replace("<head>", "").replace("</head>", "")
-    file_content = file_content.replace("<body>", "").replace("</body>", "")
-    st.markdown(file_content, unsafe_allow_html=True)
-except FileNotFoundError:
-    pass  # Ignore if file not found locally
-
 # ==========================================
-# CUSTOM CSS (with NEONALPHA styling)
+# CUSTOM CSS
 # ==========================================
 st.markdown("""
     <style>
@@ -120,13 +107,11 @@ st.markdown("""
             margin: 15px 0;
             box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
         }
-        /* Logo glow effect */
         .stImage img {
             filter: drop-shadow(0 0 15px rgba(0, 255, 204, 0.5));
             border-radius: 8px;
             background: transparent !important;
         }
-        /* Brand container alignment */
         .brand-container {
             display: flex;
             align-items: center;
@@ -251,8 +236,8 @@ Fear & Greed Index: {fg_val}/100 ({fg_label})
 Total Capital: ${total_capital:,.0f}
 Risk per trade: {risk_percent}%
 
-=== YOUR OUTPUT FORMAT (STRICTLY FOLLOW THIS) ===
-You MUST respond in the EXACT format below. Each section MUST start with the exact headers.
+=== YOUR OUTPUT FORMAT ===
+You MUST respond in the EXACT format below.
 
 --- TECHNICAL ANALYSIS ---
 Technical Score: [0-100]
@@ -296,7 +281,6 @@ If confidence is below 60%, signal HOLD.
         response = model.generate_content(prompt)
         output_text = response.text
 
-        # Parse sections
         sections = {}
         current_section = None
         lines = output_text.split('\n')
@@ -534,13 +518,13 @@ if ML_AVAILABLE:
             }
 
 # ==========================================
-# BRANDING - NEONALPHA HEADER (with Logo)
+# BRANDING
 # ==========================================
 
 col_logo, col_text = st.columns([1, 5])
 
 with col_logo:
-    st.image("NEONALPHA.png", width=80)   # <-- LOGO FILE IN ROOT FOLDER
+    st.image("NEONALPHA.png", width=80)
 
 with col_text:
     st.markdown("""
@@ -669,7 +653,7 @@ with price_placeholder.container():
 st.markdown("---")
 
 # ==========================================
-# TABS (5 tabs)
+# TABS
 # ==========================================
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "📊 LIVE TRADING DESK", 
@@ -908,25 +892,14 @@ with tab5:
 # TAB 2: ADVANCED QUANT LAB
 # ==========================================
 with tab2:
-    # ---- Multi-Indicator Scanner Grid (only after EXECUTE) ----
     if execute_analysis:
-        # Fetch data and display grid (if not already done in main analysis)
-        # We'll display the grid inside the analysis block; we can just show it here.
-        # But to avoid duplication, we can leave it as is.
-        # For now, we'll include a placeholder that will be updated by the analysis block.
-        # We'll use a placeholder that can be filled.
         grid_placeholder = st.empty()
-        # The main analysis will fill this placeholder.
     else:
         st.info("📊 Click **⚡ EXECUTE ALL MATRICES** to load quant indicators and backtest results.")
-        # But we still want the backtest engine to be visible even if not executed.
-        # So we'll show the backtest engine below unconditionally.
 
-    # ---- BACKTEST ENGINE (ALWAYS VISIBLE) ----
     st.markdown("---")
     st.markdown("### ⚡ Advanced Backtest Engine (Quant X Ultimate Strategy)")
 
-    # Always show parameters and run button
     with st.expander("⚙️ Strategy Parameters", expanded=True):
         col1, col2, col3 = st.columns(3)
         with col1:
@@ -944,7 +917,6 @@ with tab2:
             tp1_percent = st.number_input("TP1 %", min_value=0.1, max_value=5.0, value=1.0, step=0.1, key="bt_tp1") if use_partial else 0.0
             backtest_period = st.selectbox("Backtest Period", ["1mo", "3mo", "6mo", "1y", "2y"], index=0, key="bt_period")
 
-    # Run button for backtest
     if st.button("🚀 Run Advanced Backtest", key="run_bt", use_container_width=True):
         with st.spinner("Running full backtest..."):
             params = {
@@ -959,7 +931,6 @@ with tab2:
                 'use_partial_exits': use_partial,
                 'tp1_percent': tp1_percent,
             }
-            # Use current selected symbol and interval from sidebar
             stats, trades, equity = run_manual_backtest(yf_ticker, selected_interval, backtest_period, params)
             if stats is None:
                 st.error(f"Backtest failed: {trades}")
@@ -1001,23 +972,19 @@ with tab2:
                     )
 
 # ==========================================
-# MAIN ANALYSIS - EXECUTE BUTTON (for AI and Grid)
+# MAIN ANALYSIS - EXECUTE BUTTON
 # ==========================================
 if execute_analysis:
     if not api_key_1:
         st.error("⚠️ Primary Gemini API Key missing! Please add your API key in the sidebar.")
-        # Still load data for grid (but without AI)
         with st.spinner("Loading data for analysis..."):
             try:
                 stock = yf.Ticker(yf_ticker)
                 hist = stock.history(period=data_period, interval=selected_interval, auto_adjust=True)
                 if not hist.empty:
-                    # Display grid in tab2 (since it's conditional on execute_analysis)
                     with tab2:
-                        # We already have a placeholder if needed, but we can directly write.
                         st.markdown("### 🧪 MULTI-INDICATOR SCANNER GRID")
                         c1, c2, c3, c4 = st.columns(4)
-                        # compute metrics
                         hist['EMA_9'] = hist['Close'].rolling(window=9).mean()
                         hist['SMA_20'] = hist['Close'].rolling(window=20).mean()
                         delta = hist['Close'].diff()
@@ -1063,7 +1030,6 @@ if execute_analysis:
                 stock = yf.Ticker(yf_ticker)
                 hist = stock.history(period=data_period, interval=selected_interval, auto_adjust=True)
                 if not hist.empty:
-                    # Compute indicators
                     hist['EMA_9'] = hist['Close'].rolling(window=9).mean()
                     hist['SMA_20'] = hist['Close'].rolling(window=20).mean()
                     delta = hist['Close'].diff()
@@ -1109,7 +1075,6 @@ if execute_analysis:
                     }
                     fear_greed_tuple = (fg_value, fg_label) if fg_value else (50, 'Neutral')
 
-                    # AI Signal
                     final_signal, agent_outputs = generate_multi_agent_signal(
                         api_key_1, price_data, total_capital, risk_percent, fear_greed_tuple
                     )
@@ -1118,7 +1083,6 @@ if execute_analysis:
                             api_key_2, price_data, total_capital, risk_percent, fear_greed_tuple
                         )
 
-                    # Update Tab1 AI Signal
                     with tab1:
                         ai_signal_placeholder.empty()
                         with ai_signal_placeholder.container():
@@ -1145,7 +1109,6 @@ if execute_analysis:
                             else:
                                 st.warning("⚠️ Multi-Agent system could not generate a signal. Please check API key or try again.")
 
-                    # Update Tab2 Grid
                     with tab2:
                         st.markdown("### 🧪 MULTI-INDICATOR SCANNER GRID")
                         c1, c2, c3, c4 = st.columns(4)
@@ -1179,7 +1142,6 @@ if execute_analysis:
                         b2.metric(label="WINNING TRADES", value=f"{total_win}")
                         b3.metric(label="NET ALPHA", value=f"+{hist_20['Strat_Returns'].sum()*100:.2f}%" if hist_20['Strat_Returns'].sum() >= 0 else f"{hist_20['Strat_Returns'].sum()*100:.2f}%")
 
-                    # Update Tab3 Risk
                     with tab3:
                         st.markdown("### 🚨 RISK MANAGEMENT PROFILE")
                         allowed_risk_cash = total_capital * (risk_percent / 100)
@@ -1226,17 +1188,14 @@ if execute_analysis:
             except Exception as e:
                 st.error(f"🚨 Analysis Error: {str(e)}")
 else:
-    # If not executed, show only backtest engine (already visible)
-    # and placeholders for grid and risk
     with tab2:
-        # The backtest engine is already visible above; we just show a placeholder for grid
         st.info("📊 Click **⚡ EXECUTE ALL MATRICES** to load quant indicators.")
     with tab3:
         st.info("🛡️ Click **⚡ EXECUTE ALL MATRICES** to see risk profile.")
     with tab4:
-        pass  # always visible
+        pass
     with tab5:
-        pass  # always visible
+        pass
 
 # ==========================================
 # PINE SCRIPT EDITOR
