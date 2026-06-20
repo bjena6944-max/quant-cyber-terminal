@@ -49,7 +49,17 @@ st.set_page_config(
 )
 
 # ==========================================
-# GOOGLE SEARCH CONSOLE VERIFICATION META TAG
+# SERVE GOOGLE VERIFICATION HTML FILE
+# ==========================================
+try:
+    with open("googlea939c6e0ed88f9e2.html", "r", encoding="utf-8") as f:
+        google_verification_content = f.read()
+    st.markdown(google_verification_content, unsafe_allow_html=True)
+except FileNotFoundError:
+    pass  # File nahi hai toh ignore karo (local testing mein issue na ho)
+
+# ==========================================
+# GOOGLE SEARCH CONSOLE VERIFICATION META TAG (fallback)
 # ==========================================
 st.markdown("""
     <meta name="google-site-verification" content="qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4" />
