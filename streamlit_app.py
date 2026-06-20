@@ -49,21 +49,24 @@ st.set_page_config(
 )
 
 # ==========================================
-# SERVE GOOGLE VERIFICATION HTML FILE
+# GOOGLE SEARCH CONSOLE VERIFICATION
 # ==========================================
-try:
-    with open("googlea939c6e0ed88f9e2.html", "r", encoding="utf-8") as f:
-        google_verification_content = f.read()
-    st.markdown(google_verification_content, unsafe_allow_html=True)
-except FileNotFoundError:
-    pass  # File nahi hai toh ignore karo (local testing mein issue na ho)
-
-# ==========================================
-# GOOGLE SEARCH CONSOLE VERIFICATION META TAG (fallback)
-# ==========================================
+# PRIMARY: HTML Tag Method (Recommended for Streamlit)
 st.markdown("""
     <meta name="google-site-verification" content="qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4" />
 """, unsafe_allow_html=True)
+
+# SECONDARY: HTML File method fallback (Embed the content safely)
+try:
+    with open("googlea939c6e0ed88f9e2.html", "r", encoding="utf-8") as f:
+        file_content = f.read()
+    # Remove html, head, body tags to avoid breaking the layout
+    file_content = file_content.replace("<html>", "").replace("</html>", "")
+    file_content = file_content.replace("<head>", "").replace("</head>", "")
+    file_content = file_content.replace("<body>", "").replace("</body>", "")
+    st.markdown(file_content, unsafe_allow_html=True)
+except FileNotFoundError:
+    pass  # Ignore if file not found locally
 
 # ==========================================
 # CUSTOM CSS (with NEONALPHA styling)
