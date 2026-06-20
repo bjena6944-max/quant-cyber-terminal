@@ -497,7 +497,7 @@ if ML_AVAILABLE:
 col_logo, col_text = st.columns([1, 5])
 
 with col_logo:
-    st.image("assets/NEONALPHA.png", width=80)
+    st.image("NEONALPHA.png", width=80)
 
 with col_text:
     st.markdown("""
