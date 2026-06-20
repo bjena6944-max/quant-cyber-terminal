@@ -56,6 +56,23 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
+# SERVE GOOGLE VERIFICATION HTML FILE (FALLBACK)
+# ==========================================
+verification_file = "googlea939c6e0ed88f9e2.html"
+if os.path.exists(verification_file):
+    try:
+        with open(verification_file, "r", encoding="utf-8") as f:
+            content = f.read()
+        # Remove html, head, body tags to embed safely
+        content = content.replace("<html>", "").replace("</html>", "")
+        content = content.replace("<head>", "").replace("</head>", "")
+        content = content.replace("<body>", "").replace("</body>", "")
+        st.markdown(content, unsafe_allow_html=True)
+    except Exception as e:
+        # If file read fails, ignore
+        pass
+
+# ==========================================
 # CUSTOM CSS
 # ==========================================
 st.markdown("""
