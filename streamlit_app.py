@@ -39,7 +39,7 @@ except ImportError:
     st.warning("⚠️ Real-time ML requires 'websocket-client'. Install with: pip install websocket-client")
 
 # ==========================================
-# PAGE CONFIG
+# PAGE CONFIG (with new title and favicon)
 # ==========================================
 st.set_page_config(
     page_title="NEONALPHA — Institutional Quant Intelligence",
@@ -49,7 +49,7 @@ st.set_page_config(
 )
 
 # ==========================================
-# CUSTOM CSS
+# CUSTOM CSS (with NEONALPHA styling)
 # ==========================================
 st.markdown("""
     <style>
@@ -100,11 +100,33 @@ st.markdown("""
             margin: 15px 0;
             box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
         }
-        /* Logo Glow */
+        /* Logo glow effect */
         .stImage img {
-            filter: drop-shadow(0 0 12px rgba(0, 255, 204, 0.5));
+            filter: drop-shadow(0 0 15px rgba(0, 255, 204, 0.5));
             border-radius: 8px;
             background: transparent !important;
+        }
+        /* Brand container alignment */
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            height: 100%;
+        }
+        .brand-name {
+            font-size: 32px;
+            color: #00ffcc;
+            text-shadow: 0 0 25px #00ffcc;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+        .brand-tagline {
+            font-size: 14px;
+            color: #ff007f;
+            text-shadow: 0 0 15px #ff007f;
+            letter-spacing: 4px;
+            opacity: 0.8;
+            margin-top: 5px;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -492,22 +514,19 @@ if ML_AVAILABLE:
             }
 
 # ==========================================
-# BRANDING - NEONALPHA HEADER (WITH LOGO IMAGE)
+# BRANDING - NEONALPHA HEADER (with Logo)
 # ==========================================
+
 col_logo, col_text = st.columns([1, 5])
 
 with col_logo:
-    st.image("NEONALPHA.png", width=80)
+    st.image("NEONALPHA.png", width=80)   # <-- LOGO FILE IN ROOT FOLDER
 
 with col_text:
     st.markdown("""
-        <div style="display: flex; align-items: center; gap: 20px; height: 100%;">
-            <span style="font-size: 32px; color: #00ffcc; text-shadow: 0 0 25px #00ffcc; font-weight: bold; font-family: 'Courier New', monospace;">
-                NEONALPHA
-            </span>
-            <span style="font-size: 14px; color: #ff007f; text-shadow: 0 0 15px #ff007f; letter-spacing: 4px; opacity: 0.8; margin-top: 5px;">
-                INSTITUTIONAL QUANT INTELLIGENCE
-            </span>
+        <div class="brand-container">
+            <span class="brand-name">NEONALPHA</span>
+            <span class="brand-tagline">INSTITUTIONAL QUANT INTELLIGENCE</span>
         </div>
     """, unsafe_allow_html=True)
 
