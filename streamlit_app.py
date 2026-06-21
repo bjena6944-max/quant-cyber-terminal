@@ -87,7 +87,7 @@ st.markdown("""
 # SERVE GOOGLE VERIFICATION HTML FILE (Method 3)
 # ==========================================
 # Check for possible file names
-verification_files = ["googlea939c6e0ed88f9e2.html", "google939c6e0ed88f9e2.html", "google93c6e0ed88f9e2.html"]
+verification_files = ["googlea939c6e0ed88f9e2.html", "googlea939c6e0ed88f9e2.html", "googlea939c6e0ed88f9e2.html"]
 for vf in verification_files:
     if os.path.exists(vf):
         try:
