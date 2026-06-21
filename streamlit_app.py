@@ -49,26 +49,43 @@ st.set_page_config(
 )
 
 # ==========================================
-# GOOGLE SEARCH CONSOLE VERIFICATION META TAG (FIXED)
+# GOOGLE SEARCH CONSOLE VERIFICATION - HEAD INJECT (FIXED)
 # ==========================================
+# Method 1: JavaScript to inject meta tag into <head>
+st.markdown("""
+    <script>
+        (function() {
+            var meta = document.createElement('meta');
+            meta.name = 'google-site-verification';
+            meta.content = 'qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4';
+            document.head.appendChild(meta);
+        })();
+    </script>
+""", unsafe_allow_html=True)
+
+# Method 2: Also try the meta tag via st.markdown (fallback)
 st.markdown("""
     <meta name="google-site-verification" content="qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4" />
 """, unsafe_allow_html=True)
 
 # ==========================================
-# SERVE GOOGLE VERIFICATION HTML FILE (FALLBACK - FIXED)
+# SERVE GOOGLE VERIFICATION HTML FILE (FALLBACK)
 # ==========================================
-verification_file = "googlea939c6e0ed88f9e2.html"
-if os.path.exists(verification_file):
-    try:
-        with open(verification_file, "r", encoding="utf-8") as f:
-            content = f.read()
-        content = content.replace("<html>", "").replace("</html>", "")
-        content = content.replace("<head>", "").replace("</head>", "")
-        content = content.replace("<body>", "").replace("</body>", "")
-        st.markdown(content, unsafe_allow_html=True)
-    except:
-        pass
+# Try both possible file names
+verification_files = ["googlea939c6e0ed88f9e2.html", "google939c6e0ed88f9e2.html"]
+for vf in verification_files:
+    if os.path.exists(vf):
+        try:
+            with open(vf, "r", encoding="utf-8") as f:
+                content = f.read()
+            # Remove html, head, body tags to embed safely
+            content = content.replace("<html>", "").replace("</html>", "")
+            content = content.replace("<head>", "").replace("</head>", "")
+            content = content.replace("<body>", "").replace("</body>", "")
+            st.markdown(content, unsafe_allow_html=True)
+            break  # Stop after first successful file
+        except:
+            pass
 
 # ==========================================
 # CUSTOM CSS
