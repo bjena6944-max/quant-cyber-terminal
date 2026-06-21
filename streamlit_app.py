@@ -49,43 +49,56 @@ st.set_page_config(
 )
 
 # ==========================================
-# GOOGLE SEARCH CONSOLE VERIFICATION - HEAD INJECT (FIXED)
+# GOOGLE SEARCH CONSOLE VERIFICATION META TAG
 # ==========================================
-# Method 1: JavaScript to inject meta tag into <head>
-st.markdown("""
-    <script>
-        (function() {
-            var meta = document.createElement('meta');
-            meta.name = 'google-site-verification';
-            meta.content = 'qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4';
-            document.head.appendChild(meta);
-        })();
-    </script>
-""", unsafe_allow_html=True)
-
-# Method 2: Also try the meta tag via st.markdown (fallback)
 st.markdown("""
     <meta name="google-site-verification" content="qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4" />
 """, unsafe_allow_html=True)
 
 # ==========================================
+# GOOGLE TAG MANAGER (For Verification) - SCRIPT VERSION
+# ==========================================
+st.markdown("""
+    <!-- Google Tag Manager -->
+    <script>
+    (function(w,d,s,l,i){
+        w[l]=w[l]||[];
+        w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
+        var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),
+            dl=l!='dataLayer'?'&l='+l:'';
+        j.async=true;
+        j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+        f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MNCD3WR3');
+    </script>
+    <!-- End Google Tag Manager -->
+""", unsafe_allow_html=True)
+
+# ==========================================
+# GOOGLE TAG MANAGER (For Verification) - NOSCRIPT VERSION
+# ==========================================
+st.markdown("""
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MNCD3WR3"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+""", unsafe_allow_html=True)
+
+# ==========================================
 # SERVE GOOGLE VERIFICATION HTML FILE (FALLBACK)
 # ==========================================
-# Try both possible file names
-verification_files = ["googlea939c6e0ed88f9e2.html", "google939c6e0ed88f9e2.html"]
-for vf in verification_files:
-    if os.path.exists(vf):
-        try:
-            with open(vf, "r", encoding="utf-8") as f:
-                content = f.read()
-            # Remove html, head, body tags to embed safely
-            content = content.replace("<html>", "").replace("</html>", "")
-            content = content.replace("<head>", "").replace("</head>", "")
-            content = content.replace("<body>", "").replace("</body>", "")
-            st.markdown(content, unsafe_allow_html=True)
-            break  # Stop after first successful file
-        except:
-            pass
+verification_file = "googlea939c6e0ed88f9e2.html"
+if os.path.exists(verification_file):
+    try:
+        with open(verification_file, "r", encoding="utf-8") as f:
+            content = f.read()
+        content = content.replace("<html>", "").replace("</html>", "")
+        content = content.replace("<head>", "").replace("</head>", "")
+        content = content.replace("<body>", "").replace("</body>", "")
+        st.markdown(content, unsafe_allow_html=True)
+    except:
+        pass
 
 # ==========================================
 # CUSTOM CSS
