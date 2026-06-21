@@ -1,6 +1,3 @@
-st.markdown("""
-    <meta name="google-site-verification" content="YOUR_META_TAG_CONTENT" />
-""", unsafe_allow_html=True)
 import streamlit as st
 import os
 from dotenv import load_dotenv
