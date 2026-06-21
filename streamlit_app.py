@@ -49,27 +49,25 @@ st.set_page_config(
 )
 
 # ==========================================
-# GOOGLE SEARCH CONSOLE VERIFICATION META TAG
+# GOOGLE SEARCH CONSOLE VERIFICATION META TAG (FIXED)
 # ==========================================
 st.markdown("""
     <meta name="google-site-verification" content="qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4" />
 """, unsafe_allow_html=True)
 
 # ==========================================
-# SERVE GOOGLE VERIFICATION HTML FILE (FALLBACK)
+# SERVE GOOGLE VERIFICATION HTML FILE (FALLBACK - FIXED)
 # ==========================================
 verification_file = "googlea939c6e0ed88f9e2.html"
 if os.path.exists(verification_file):
     try:
         with open(verification_file, "r", encoding="utf-8") as f:
             content = f.read()
-        # Remove html, head, body tags to embed safely
         content = content.replace("<html>", "").replace("</html>", "")
         content = content.replace("<head>", "").replace("</head>", "")
         content = content.replace("<body>", "").replace("</body>", "")
         st.markdown(content, unsafe_allow_html=True)
-    except Exception as e:
-        # If file read fails, ignore
+    except:
         pass
 
 # ==========================================
