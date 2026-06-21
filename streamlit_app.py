@@ -48,7 +48,26 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ============================================================
+## ==========================================
+# GOOGLE SEARCH CONSOLE VERIFICATION - STREAMLIT
+# ==========================================
+# Meta tag ko head mein inject karne ke liye JavaScript
+st.markdown("""
+    <script>
+        (function() {
+            var meta = document.createElement('meta');
+            meta.name = 'google-site-verification';
+            meta.content = 'qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4';
+            document.head.appendChild(meta);
+        })();
+    </script>
+""", unsafe_allow_html=True)
+
+# Fallback meta tag (body mein bhi add kar do)
+st.markdown("""
+    <meta name="google-site-verification" content="qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4" />
+""", unsafe_allow_html=True)
+#  ============================================================
 # 🚀 GOOGLE SEARCH CONSOLE VERIFICATION (ALL 3 METHODS)
 # ============================================================
 
