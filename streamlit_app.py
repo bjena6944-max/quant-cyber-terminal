@@ -48,35 +48,17 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-## ==========================================
-# GOOGLE SEARCH CONSOLE VERIFICATION - STREAMLIT
-# ==========================================
-# Meta tag ko head mein inject karne ke liye JavaScript
-st.markdown("""
-    <script>
-        (function() {
-            var meta = document.createElement('meta');
-            meta.name = 'google-site-verification';
-            meta.content = 'qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4';
-            document.head.appendChild(meta);
-        })();
-    </script>
-""", unsafe_allow_html=True)
-
-# Fallback meta tag (body mein bhi add kar do)
-st.markdown("""
-    <meta name="google-site-verification" content="qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4" />
-""", unsafe_allow_html=True)
-#  ============================================================
-# 🚀 GOOGLE SEARCH CONSOLE VERIFICATION (ALL 3 METHODS)
 # ============================================================
-
-# 1. META TAG METHOD
+# 🚀 GOOGLE SEARCH CONSOLE VERIFICATION - META TAG (HTML tag method)
+# ============================================================
+# Yeh meta tag Google Search Console verification ke liye hai
 st.markdown("""
     <meta name="google-site-verification" content="qGPnSzkacfMR9iCcJpfegkA4u7MnNv5cm7QHrRHD2W4" />
 """, unsafe_allow_html=True)
 
-# 2. GOOGLE TAG MANAGER (GTM) METHOD
+# ============================================================
+# 🚀 GOOGLE TAG MANAGER (GTM) - Already added
+# ============================================================
 st.markdown("""
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MNCD3WR3');</script>
@@ -87,22 +69,6 @@ st.markdown("""
 st.markdown("""
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MNCD3WR3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 """, unsafe_allow_html=True)
-
-# 3. HTML FILE METHOD (SERVE FILE CONTENT)
-# Check for possible file names
-verification_files = ["googlea939c6e0ed88f9e2.html"]
-for vf in verification_files:
-    if os.path.exists(vf):
-        try:
-            with open(vf, "r", encoding="utf-8") as f:
-                content = f.read()
-            content = content.replace("<html>", "").replace("</html>", "")
-            content = content.replace("<head>", "").replace("</head>", "")
-            content = content.replace("<body>", "").replace("</body>", "")
-            st.markdown(content, unsafe_allow_html=True)
-            break
-        except:
-            pass
 
 # ==========================================
 # CUSTOM CSS
